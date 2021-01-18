@@ -1,2 +1,0 @@
-# xinxin_lc
-yses
