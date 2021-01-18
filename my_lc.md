@@ -4,7 +4,16 @@
 
 总结：使用直线的一般表现形式来判断，或者使用线性代数知识，向量的线性相关性，共线即相关，任一二维向量组成的行列式值为0.
 
-```class Solution {
+```C++
+#define Epslion 1e-8
+double value_1 = 3.3
+double value_2 = 3.3
+if(fabs(value_1-value_2)>Epslion) //not equal
+```
+
+
+
+```C++
 class Solution {
 public:
     bool checkStraightLine(vector<vector<int>>& coordinates) {
