@@ -25,6 +25,8 @@ for(int i = 2;i<coordinates.size();i++){
 
 ### 721 账户合并
 
+#### 并查集
+
 第一步并查集初始化每个个体的根节点初始化为自己本身
 
 ```C++
@@ -53,6 +55,21 @@ int find(int x){
 int merge(int x,int y){
     parent(find(x)) = find(y);
 }
+```
+
+#### Vector插入Vector
+
+在指定位置loc前插入区间[start,end)的所有元素
+
+```C++
+void insert(iterator loc,input_iterator start,input_iterator end)
+```
+
+例如：
+
+```C++
+vector<string> temp(1,account[k][0]);
+temp.insert(temp.end(),v.begin(),v.end());
 ```
 
 
