@@ -1,6 +1,6 @@
 # log
 
-### 1232 缀点成线
+## 1232 缀点成线
 
 总结：使用直线的一般表现形式来判断，或者使用线性代数知识，向量的线性相关性，共线即相关，任一二维向量组成的行列式值为0,以任意一点作为起点,其他点与这个点连成向量，判断向量是否共线，即相关，如果有一个不为0，即不共线.
 
@@ -23,9 +23,9 @@ for(int i = 2;i<coordinates.size();i++){
 }
 ```
 
-### 721 账户合并
+## 721 账户合并
 
-#### 并查集
+### 并查集
 
 第一步并查集初始化每个个体的根节点初始化为自己本身
 
@@ -57,9 +57,9 @@ int merge(int x,int y){
 }
 ```
 
-#### Vector插入Vector
+### Vector插入Vector
 
-在指定位置loc前插入区间[start,end)的所有元素
+在指定位置```loc```前插入区间```[start,end)```的所有元素
 
 ```C++
 void insert(iterator loc,input_iterator start,input_iterator end)
