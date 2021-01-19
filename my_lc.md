@@ -23,7 +23,37 @@ for(int i = 2;i<coordinates.size();i++){
 }
 ```
 
+### 721 账户合并
 
+第一步并查集初始化每个个体的根节点初始化为自己本身
+
+```C++
+int parent[n];
+inline void init(int n){
+    for(int i=0;i<n;i++){
+        parent[i] = i;
+    }
+}
+```
+
+第二步即是查询，一层一层访问父节点，直至根节点
+
+```C++
+int find(int x){
+    if(parent[x]==x)
+        return x;
+    else
+        return find(parent[x]);
+}
+```
+
+第三步即是合并，提前将前者的父节点设置为后者即可,先简单的将前者的父节点设置为后者的根节点
+
+```C++
+int merge(int x,int y){
+    parent(find(x)) = find(y);
+}
+```
 
 
 
