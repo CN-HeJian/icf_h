@@ -72,5 +72,68 @@ vector<string> temp(1,account[k][0]);
 temp.insert(temp.end(),v.begin(),v.end());
 ```
 
+## 1584 连接所有点的最小费用
+
+### 普里姆算法Prim
+
+可以在加权连通图中搜索最小生成树，在现实中的应用在不同城市之间架设铁路，要求总的路径和最小，最终在连通图中选择的路线组成一棵树，因此得名，Prim算法的核心在于维护两个数组，一个是记录所有节点到已经访问过的节点的最小距离，一个记录节点是否访问
+
+```C++
+vector<int> min_cost(p_len,INT_MAX)         //初始化为INT_MAX
+vector<bool> is_checked(p_len,false)        //全部初始化为未访问过
+```
+
+第一步，构建邻接矩阵
+
+```C++
+vector<vector<int>> dis(p_len,vector<int>(p_len,0));
+for(int i=0;i<p_len;i++){
+	for(int j=i+1;j<p_len;j++){
+		int distance = abs(points[i][0]-points[j][0])+abs(points[i][1]-points[j][1])；
+		dis[i][j] = distance;
+		dis[j][i] = distance;
+	}
+}
+```
+
+第二步，随机选择一个节点作为起点，并更新min_cost
+
+```C++
+int start_pos = 0;
+min_cost[start_pos] = INT_MAX;       //将自身设置为最大值
+is_checked[start_pos] = true;        //设置已经访问过
+/*更新最小距离*/
+for(int i=0;i<p_len;i++){            //n为节点数量
+    if(i==start_pos)
+        continue;
+    min_cost[i] = dis[i][start_pos];
+}
+```
+
+第三步，维护两个数组，找到另外n-1个最小距离
+
+```C++
+for(int i=1;i<p_len;i++){
+    int min_dis = INT_MAX;
+    int min_dis_id = -1;
+    //寻找距离最近的距离以及点
+    for(int j=0;j<p_len;j++){
+        if(min_cost[j]<min_dis){
+            min_dis = min_cost[j];
+            min_dis_id = j;
+        }
+    }
+    res +=min_dis;
+    min_cost[min_dis_id] = INT_MAX;
+    is_checked[min_dis_id] = true;
+    //更新min_cost
+    for(int i=0;i<p_len;i++){
+    	if(is_checked[i]==false && min_cost[i]>dis[min_dis_id][i]){
+			min_cost[i] = dis[min_dis_id][i];
+        }   
+    }
+}
+```
+
 
 
