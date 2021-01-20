@@ -52,7 +52,7 @@ int find(int x){
 第三步即是合并，提前将前者的父节点设置为后者即可,先简单的将前者的父节点设置为后者的根节点
 
 ```C++
-int merge(int x,int y){
+void merge(int x,int y){
     parent(find(x)) = find(y);
 }
 ```
@@ -70,6 +70,33 @@ void insert(iterator loc,input_iterator start,input_iterator end)
 ```C++
 vector<string> temp(1,account[k][0]);
 temp.insert(temp.end(),v.begin(),v.end());
+```
+
+### 定义并查集数据结构
+
+```c++
+class Djset{
+public:
+    Djset(int n){
+        parent.resize(n,0);
+        for(int i=0;i<n;i++){
+            parent[i] =i;
+        }
+    }
+    int find(int x){
+        if(x==parent[x])
+            return parent[x];
+        else
+            return find(parent[x]);
+    }
+    void merge(int x,int y){
+        int parent_x = find(x);
+        int parent_y = find(y);
+        parent[parent_x] = parent_y;
+    }
+private:  
+    vector<int> parent;
+};
 ```
 
 ## 1584 连接所有点的最小费用
@@ -135,5 +162,127 @@ for(int i=1;i<p_len;i++){
 }
 ```
 
+### lambada表达式
 
+capture list是一个lambada所在函数中定义的局部变量的列表(通常为空)；
+
+lambada表达式必须使用尾置返回来指定返回类型
+
+```C+
+[capture list](parameter list)->return type {function body}
+```
+
+本题目中不用邻接矩阵来存储距离，使用lambada表达式子来计算距离
+
+```C++
+auto dis = [&](int i,int j)->int{
+    return abs(points[i][0]-points[j][0])+abs(points[i][1]-points[j][1]);
+}
+```
+
+使用lambada表达式对对象按照成员成员的名字进行排序,例如定义了一个学生类，包含了学生姓名、各科的成绩，本题定义了一个边的结构体,存入了多条边，依据边的长度对edges进行排序
+
+```C++
+struct Edge{
+    int len；
+    int x;
+    int y;
+    Edge(int len,int x,int y):len(len),x(x),y(y){
+    }
+}
+```
+
+存入多条边对其进行排序,依据边的长度进行排序
+
+```C++
+vector<Edge> edges;
+sort(edges.begin(),edges.end(),[](Edge a,Edge b)->bool{return a.len<b.len;});
+```
+
+###  ```Kruskal```算法
+
+此算法以边为基础，对边进行排序，并查集也就分为两类，一类为已经添加的节点，这些节点并查集中有共同的root，另一类还未添加到已经存在的集合中,因此需要定义并查集数据结构，并查集数据结构参考721，使用自定义数据结构以及lambada表达式可以简化代码
+
+第一步，定义并查集数据结构，注意完整的并查集数据结构初始化时需要重新resize记录节点的根节点的数组
+
+```c++
+class DjSet{
+public:
+    DjSet(int n){
+        for(int i=0;i<n;i++){
+            parent.resize(n,0);
+            parent[i] = i;
+        }
+    }
+    int find(int x){
+        if(parent[x]==x){
+            return parent[x];
+        }
+        return find(parent[x]);
+    }
+    bool merge(int x,int y){
+        int parent_x = find(x);
+        int parent_y = find(y);
+        if(parent_x == parent_y)
+            return true;
+        else{
+            parent[parent_x] = parent_y;
+            return false;
+        }
+     }
+private:
+    vector<int> parent;
+};
+```
+
+ 第二步，定义存储边的数据结构,如果是定义为class类型，需要将构造函数定义为public函数，因此这种一般定义为```struct```类型
+
+```C++
+class Edge{
+public:
+    Edge(int x,int y,int len):x(x),y(y),len(len){ 
+    }
+    int x;
+    int y;
+    int len;
+};
+```
+
+第三步，计算所有的边的长度，任一节点之间的距离，并依据距离长短来进行排序，使用并查集辅助判断节点是否添加进去，如果属于同一结集合，即两个节点之间已经连接在一起，当添加的边数为节点数减1时，最小生成树构建完毕。
+
+```C++
+class Solution {
+public:
+    int minCostConnectPoints(vector<vector<int>>& points) {
+        int res=0;
+        int p_size = points.size();
+        vector<Edge> edges;
+        auto dis = [&](int x,int y)->int{
+          	return abs(points[x][0]-points[y][0])+abs(points[y][1]-points[x][1]);  
+        };
+        for(int i=0;i<p_size;i++){
+            for(int j = i+1;j<p_size;j++){
+                edges.emplace_back(Edge(i,j,dis(i,j)));
+            }
+        }
+        sort(edges.begin(),edges.end(),[](Edge a,Edge b)->bool{return a.len<b.len;});
+        DjSet dj(p_size);
+        int num = 0;
+        for(auto &[x,y,len]:edges){
+            if(dj.merge(x,y) == false){
+                num++;
+                res += len;
+                if(num == p_size-1){
+                    break;
+                }
+            }
+        }
+        return res;  
+    }
+};
+```
+
+
+
+​                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 
