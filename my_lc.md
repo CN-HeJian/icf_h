@@ -199,7 +199,7 @@ vector<Edge> edges;
 sort(edges.begin(),edges.end(),[](Edge a,Edge b)->bool{return a.len<b.len;});
 ```
 
-###  ```Kruskal```算法
+###  Kruska算法
 
 此算法以边为基础，对边进行排序，并查集也就分为两类，一类为已经添加的节点，这些节点并查集中有共同的root，另一类还未添加到已经存在的集合中,因此需要定义并查集数据结构，并查集数据结构参考721，使用自定义数据结构以及lambada表达式可以简化代码
 
@@ -235,7 +235,7 @@ private:
 };
 ```
 
- 第二步，定义存储边的数据结构,如果是定义为class类型，需要将构造函数定义为public函数，因此这种一般定义为```struct```类型
+ 第二步，定义存储边的数据结构,如果是定义为class类型，需要将构造函数定义为public函数，因此这种一般定义为struct类型
 
 ```C++
 class Edge{
