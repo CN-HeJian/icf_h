@@ -8,7 +8,7 @@
 ##### 721 账户合并
 
 - 并查集
-- vector的sort用法，向量中插入vector
+- vector的insert用法，向量中插入vector
 
 ##### 1584 连接所有点的最小费用
 
