@@ -98,7 +98,7 @@ public:
 
 ## 101 对称二叉树
 
-迭代写法
+### 递归写法
 
 ```C++
 class Solution {
@@ -119,4 +119,42 @@ public:
     }
 };
 ```
+
+### 迭代写法
+
+左子树从最左边遍历，右子树从最右边遍历，分别判断每一个是否相等即可
+
+```C++
+class Solution {
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(!root)
+            return true;
+		auto r_left = root->left;
+        auto r_right = root->right;
+       	stack<TreeNode*> l_stk,r_stk;
+        while(r_left || r_right || l_stk.size() ||r_stk.size()){
+            while(r_left && r_right){
+                l_stk.push(r_left);
+                r_stk.push(r_right);
+                r_left = r_left->left;
+                r_right = r_right->right;
+            }
+            if(r_left || r_right){
+                return false;
+            }
+            if(l_stk.top()->val!=r_stk.top()->val){
+                return false;
+            }
+            r_left = l_stk.top()->right;//这儿经常犯错...
+            r_right = r_stk.top()->left;//
+            l_stk.pop();
+            r_stk.pop();
+        }
+        return true;
+    }
+};
+```
+
+
 
