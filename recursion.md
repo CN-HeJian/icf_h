@@ -295,3 +295,29 @@ public:
 ```
 
 ## 二叉树的最大路径和
+
+和二叉树的最大深度一样，都是自底向上的方法，只不过这儿多一句判断，如果路径和小于0不包含子树即可
+
+```	C++
+class Solution {
+public:
+    int res = INT_MIN;
+    int maxPathSum(TreeNode* root) {
+        dfs(root);
+        return res;
+    }
+    int dfs(TreeNode* root){
+        if(!root)
+            return 0;
+        auto left = dfs(root->left);
+        auto right = dfs(root->right);
+        if(left<0)
+            left = 0;
+        if(right<0)
+            right = 0;
+        res = max(res,left+right+root->val);
+        return max(left,right)+root->val;
+    }
+};
+```
+
