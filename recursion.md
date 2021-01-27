@@ -321,3 +321,66 @@ public:
 };
 ```
 
+## 687  最长同值路径
+
+同类问题，关键在于遍历之后的处理
+
+```C++
+class Solution {
+public:
+    int res;
+    int longestUnivaluePath(TreeNode* root) {
+		dfs(root);
+        return res;
+    }
+    int dfs(TreeNode *root){
+        if(!root)
+            return 0;
+        auto left =dfs(root->left);
+        auto right =dfs(root->right);
+        if(root->left && root->left->val == root->val)
+            left = left+1;
+        else
+            left = 0;
+        if(root->right && root->right->val == root->val)
+            right = right +1;
+        else
+            right = 0;
+        res = max(res,left+right);
+        return max(left,right);
+    }
+};
+```
+
+## 173 二叉搜索树迭代器
+
+中序遍历的迭代写法
+
+```	c++	
+class BSTIterator {
+public:
+    stack<TreeNode*> stk;
+    BSTIterator(TreeNode* root) {
+        while(root){  //之前这儿写成了if	
+            stk.push(root);
+            root= root->left;
+        }
+    }
+    
+    int next() {
+        auto  p =stk.top();
+        stk.pop();
+        auto temp = p->right;   //记得使用中间变量来保存一下
+        while(temp){
+            stk.push(temp);
+            temp = temp->left;
+        }
+        return p->val;
+    }
+    
+    bool hasNext() {
+        return stk.size();
+    }
+};
+```
+
