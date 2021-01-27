@@ -74,7 +74,10 @@
 - 利用队列求二叉树的层次遍历
 - C++队列的api
 
-##### 236
+##### 236 二叉树的最近公共祖先
+
+- 深入理解递归的题目
+- [优秀题解](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/solution/236-er-cha-shu-de-zui-jin-gong-gong-zu-xian-hou-xu/)
 
 ##### 543
 
