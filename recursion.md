@@ -224,3 +224,74 @@ public:
 };
 ```
 
+## 寻找最近祖先
+
+### 递归
+
+```C++
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        return dfs(root,p,q);
+    }
+    TreeNode *dfs(TreeNode *root,TreeNode *p,Treeode *q){
+        if(!root)
+            return nullptr;
+        if(root == p ||root == q)
+            return root;
+        auto left = dfs(root->left,p,q);
+        auto right = dfs(root->right,p,q);
+        if(left && right)
+            return root;
+        else if(left && !right)
+            return left;
+        else if(!left && right)
+            return right;
+        else 
+            return nullptr;
+    }
+};
+```
+
+## 二叉树的直径
+
+```C++
+class Solution {
+public:
+    int ans;
+    int diameterOfBinaryTree(TreeNode* root) {
+		dfs(root);
+        return ans-1;
+    }
+    int dfs(TreeNode *root){
+        if(!root)
+            return 0;
+        auto left = dfs(root->left);
+        auto right = dfs(root->right);
+        ans = max(ans,L+R+1); //更新ans
+        return max(left,right)+1;
+    }
+};
+```
+
+## 二叉树的最大深度
+
+```c++
+class Solution {
+public:
+    int res;
+    int maxDepth(TreeNode* root) {
+		return dfs(root);
+    }
+    int dfs(TreeNode* root){
+        if(!root)
+            return 0;
+        auto left = dfs(root->left);
+        auto right = dfs(root->right);
+        res = max(left,right)+1;
+        return res;
+    }
+};
+```
+
+## 二叉树的最大路径和

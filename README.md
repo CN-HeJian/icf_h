@@ -79,9 +79,21 @@
 - 深入理解递归的题目
 - [优秀题解](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/solution/236-er-cha-shu-de-zui-jin-gong-gong-zu-xian-hou-xu/)
 
-##### 543
+##### 124 二叉树中的最大路径和
 
-##### 124
+##### 687 最长同值路径
+
+##### 543 二叉树的直径
+
+- 递归
+- [优秀题解](https://leetcode-cn.com/problems/diameter-of-binary-tree/solution/shi-pin-jie-shi-di-gui-dai-ma-de-yun-xing-guo-chen/)
+
+##### 104 二叉树的最大深度
+
+- 迭代
+- 简单题
+
+##### 124 
 
 ##### 173
 
