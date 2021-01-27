@@ -86,6 +86,9 @@
 
 ##### 687 最长同值路径
 
+- 综合题
+- [优秀题解](https://leetcode-cn.com/problems/longest-univalue-path/solution/687-by-ikaruga/)
+
 ##### 543 二叉树的直径
 
 - 递归
