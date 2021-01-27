@@ -158,3 +158,27 @@ public:
 
 
 
+## 105 从前序遍历以及中序遍历构建二叉树
+
+### 递归写法
+
+```C++
+class Solution {
+public:
+    unordered_map<int,int> rec_pos;
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+		int n = preorder.size();
+        for(int i=0;i<n;++i)
+            rec_pos[inorder[i]] = i;
+        return dfs(preorder,inorder,0,n-1,0,n-1);
+    }
+    TreeNode* dfs(vector<int> &preorder,vector<int> &inorder,int p_l,int p_r,int i_l,int i_r){
+   		if(p_l>p_r)
+    		return nullptr;
+        int root_val = preorder[p_l];
+        int root_pos = rec_pos[root_val];
+        auto root = new TreeNode(root_val);
+    }
+};
+```
+
