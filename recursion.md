@@ -177,7 +177,49 @@ public:
     		return nullptr;
         int root_val = preorder[p_l];
         int root_pos = rec_pos[root_val];
+        int length = root_pos - i_l;
         auto root = new TreeNode(root_val);
+        root->left = dfs(preorder,inorder,p_l+1,p_l+length,i_l,root_pos-1);
+        root->right = dfs(preorder,inorder,p_l+length+1,p_r,root_pos+1,i_r);
+        return root;
+    }
+};
+```
+
+### 迭代写法
+
+```C++
+//暂时不会
+```
+
+## 102 二叉树的层序遍历
+
+使用队列就好写了嘛！！！先进先出
+
+```C++
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if(!root)
+            return {}; //不需要{{}}
+        queue<TreeNode*> my_que;
+        my_que.push(root);
+        vector<vector<int>> res;
+        while(my_que.size()){
+            int n = my_que.size();
+            for(int i=0;i<n;++i){
+                auto top = my_que.front();
+                vector<int> level;
+                level.push_back(top->val);
+                if(top->left)//记得判断是否存在
+                    my_que.push(top->left);
+                if(top->right)
+                    my_que.push(top->right);
+                my_que.pop()//需要pop,不然会TLE(time limit error)
+            }
+            res.push_back(level);
+        }
+        return res;
     }
 };
 ```
