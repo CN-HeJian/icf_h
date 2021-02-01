@@ -344,3 +344,183 @@
   - 按照区间的左端点进行排序
   - 维护一个区间，扫描整个区间
 
+## 基础数据结构
+
+##### 链表和邻接表
+
+- 数组模拟单链表
+
+  - 单链表用途为实现邻接表，邻接表一般用来存储树和图
+
+- 使用双数组加上头节点来模拟链表
+
+  - 头结点表示下标
+
+  - 一个e数组用来存储节点i的值，ne数组存储节点i的下一个位置
+
+  - idx存储当前用到哪个点
+
+  - ```C++
+    //初始化
+    void init(){
+        head = -1;
+        idx = 0;
+    }
+    //添加到头结点
+    void add_to_head(int x){
+        /*第一步，赋值并指向之前头结点指向的位置*/
+        e[idx] = x;  //将x存下来
+        ne[idx] = head; //指向下一位
+        /*第二步，更新头结点指向的位置*/
+        head = idx; //头节点指向idx
+        idx++;
+    }
+    //将x插到下标为k的点的后面
+    void add(int k,int x){
+        e[idx] = x;
+        ne[idx] = ne[k];
+        ne[k] = idx;
+        idx++;
+    }
+    //将下标为k的后一个点删除掉
+    void remove(int k){
+        ne[k] = ne[ne[k]];
+    }
+    ```
+
+- 双链表用来优化某些问题
+
+  - ```C++
+    //初始化
+    void init(){
+    //0表示左端点、1表示右端点
+    	r[0] = 1,
+        l[1] = 0;
+        idx = 2;
+    }
+    //在下标为k的右边插入一个新的点，添加操作，4条操作
+    void add(int k,int x){
+        e[idx] = x;
+        //先插入新增的两条
+        r[index] = r[k];
+        l[index] = k;
+        //对原来不对两条边的进行更改，注意下面两条的顺序
+        l[r[k]] = idx; //需要先将原来k后面我的一个点的左指针改掉，再来改右边的
+        r[k] = idx;
+        //l[r[k]] = idx;
+    }
+    //删除第k个点
+    void remove(int k){
+        r[l[k]] = r[k];
+        l[r[k]] = l[k];
+    }
+    ```
+
+- 邻接表
+  - 单链表的组合
+
+##### 单调队列单调栈
+
+- 栈
+
+  -  ```C++
+    //tt表示栈顶元素
+    int stk[N],tt=0;
+    //插入
+    stk[++tt] = x;
+    //删除
+    tt--
+    //判断是否为空
+    return tt>0?true:false;
+    //取出栈顶
+    return stk[tt];
+     ```
+
+- 队列
+
+  - ```C++
+    //在队尾插入元素，从队头弹出元素,hh表示队头，tt表示队尾
+    int q[N],hh,tt=-1;
+    //插入
+    q[++tt] = x;
+    //弹出
+    hh++
+    //判断是否为空
+    if(hh<==tt)
+        return false;
+    else
+        return true;
+    //取出对头元素
+    q[hh]
+    ```
+
+- 单调栈
+
+  - 复杂度O(n)
+
+  - ```c++
+    int stk[N],tt;
+    for(int i=0;i<nums.size();i++){
+        int x = nums[i];
+        while(tt && stk[tt]>=x){
+            tt--;
+        }
+        if(tt)
+            res.push_back(stk[tt]);
+        else
+            res.push_back(-1);
+        stk[++tt] = x;
+    }
+    ```
+
+- 单调队列
+
+  -  求滑动窗口的最大值和最小值
+
+  -  复杂度
+
+  - ```C++
+    /*滑动窗口最小值*/
+    int q[N],hh,tt=-1;
+    for(int i=0;i<nums.size();i++){
+        if(hh<=tt && i-q[hh]+1>k) //队列是否超长
+            hh++;
+        while(hh<=tt && nums[q[tt]]>=nums[i]){
+            tt--;
+        }
+        q[++tt] = i;
+        if(i>=k-1)
+            printf("%d",nums[q[hh]]);
+    }
+    ```
+
+##### Kmp[克努特-莫里斯-普拉特操作]
+
+- 暴力算法
+
+  - 模拟人的判断过程
+
+- 如何去优化
+
+  - 使用前缀和来优化
+
+  - ```C++
+    int p[N],s[M];
+    int ne[N]; //有些头文件可能使用过next数组
+    for(int i=0,j=0;i<m;++i){
+        
+    }
+    ```
+
+  - 
+
+##### Trie字典树
+
+##### 并查集
+
+##### 堆
+
+##### 哈希表
+
+##### C++STL使用技巧
+
