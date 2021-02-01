@@ -507,12 +507,28 @@
   - ```C++
     int p[N],s[M];
     int ne[N]; //有些头文件可能使用过next数组
-    for(int i=0,j=0;i<m;++i){
-        
+    //求next过程
+    for(int i =2,j=0;i<=n;i++){
+        while(j &&p[i] !=p[j+1])
+            j = ne[j];
+        if(p[i] == p[j+1])
+            j++;
+        ne[i] = j;
+    }
+    //匹配过程
+    for(int i=1,j=0;i<m;++i){
+        while(j && s[i]!= p[j+1] ){
+            j = ne[j];
+        }
+        if(s[i] == p[j+1]){
+            j++;
+        }
+        if(j == n){
+            print("%d",i-n+1);
+            //匹配成功
+        }
     }
     ```
-
-  - 
 
 ##### Trie字典树
 
