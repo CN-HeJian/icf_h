@@ -423,7 +423,7 @@
 
 - 栈
 
-  -  ```C++
+  - ```C++
     //tt表示栈顶元素
     int stk[N],tt=0;
     //插入
@@ -434,7 +434,7 @@
     return tt>0?true:false;
     //取出栈顶
     return stk[tt];
-     ```
+    ```
 
 - 队列
 
