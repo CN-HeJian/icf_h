@@ -630,13 +630,54 @@
 
 ##### 哈希表
 
-- 离散化是需要保序的，是一种特殊的哈希方式
+- 离散化是需要保序的,是一种特殊的哈希方式,哈希作用是减少查询时间
 
-- 字符串的存储结构，不同的key通过哈希函数可能对应相同的value,依据处理冲突的两种方式将哈希表分类为
+- 字符串的存储结构,同的key通过哈希函数可能对应相同的value,依据处理冲突的两种方式将哈希表分类为两类
 
   - 开放寻址法
 
-    - 
+    - 思路:只开一个一维数组,开数组大小一般为2倍到三倍
+
+    - ```c++
+      //求大于200000的最小质数
+      for(int i =200000 ;;i++){
+          bool falg = true;
+          for(int j = 2;i*j<=i;j++){
+              if(i%j == 0){
+                  flag = false;
+                  break;
+              }
+          }
+          if(flag){
+              cout<<i<<endl;
+          }
+      }
+      //得到为200003
+      ```
+
+    - ```C++
+      int h[N];
+      const int N =200003,null =0x3f3f3f3f;
+      memset(h,0x3f,sizeof h);
+      //查找函数
+      int find(int x){
+          int k = (x%N+N)%N;
+          while(h[k]!=null && h[k]!= x){//要满足--查找的坑位被占了，并且被占的不是他自己才会循环
+              k++;
+              if(K==N) //如果遍历到最后，从头开始遍历
+                  k=0;
+          }
+          return k;
+      }
+      //find函数返回的是如果查找到了，返回应该
+      int k  =find(x);
+      if(*op == 'I)
+         h[k] = x;
+      else{
+          if(h[k]!=null)
+              //查找到了
+      }
+      ```
 
   - 拉链法
 
@@ -671,5 +712,105 @@
 
 - 字符串哈希方式
 
+  - 一种特殊的哈希方式---字符串前缀哈希法
+
+    - 预处理出来所有前缀所对应的哈希值---将字符串转化为数字
+      - 定义字符串所对应的哈希值
+        - 使用p进制来定义，长字符串最后的值可能会比计较大，对大数进行取模Q，因此最终会将任一字符串映射到0-Q
+      -   注意事项
+        - 不能将某一个字符映射为0,如果把A映射为0,不然AA与A是一样的
+        - 这儿假定映射不考虑冲突的情况，经验值p = 131 或者 13331 ，Q = 2^64,不发生冲突的概率为99.99%
+
+  - 应用：可以利用前缀哈希计算所有子串的哈希值，快速判断一段长字符串中的两段字符串是否完成相同
+
+    - ```C++
+      #include <iostream>
+      using namespace std
+      typedef unsigned long long ULL; //ULL自动取模
+      h[N],p[N];
+      //先预处理p次方
+      int P = 131   //经验值
+      p[0] = 1;
+      for(int i=1;i<=n;i++){
+          p[i] = p[i-1]*P;
+          h[i] = h[i-1]*p+str[i];
+      }
+      ULL get(int l,int r){
+          return h[r]-h[l]*p[r-l+1];
+      }
+      int l1,l2,r1,r2;
+      if(get(l1,r1) == get(l2,r2))
+          //相等
+      ```
+
 ##### C++STL使用技巧
+
+```C++
+- vector  //变长数组
+   size()
+   empty()
+   clear()
+   front()
+   back()
+   begin()
+   end()
+- pair
+   first()
+   second()
+   pair<int,string> p;
+   p = make_pair(10,"yxc")  //初始化p
+   p  = {20,"abc"}
+- string   //字符串
+   size()/length()
+   empty()
+   clear()
+   substr() 
+   c_str()
+- queue //队列
+   size()
+   empty()
+   push()
+   pop()
+   front()
+   back()
+- priority_queue //优先队列,默认为大顶堆,需要include<queue>
+   push()
+   top()
+   pop()
+   priority_queue<int,vector<int>,gtrater<int>> heap //定义为小根堆
+- stack //栈
+   size()
+   empty()
+   push()
+   pop()
+   top()
+- deque //双端队列
+   size()
+   empty()
+   clear()
+   front()/back()
+   push_back()/push_front()
+- set,map,multiset,multimap //基于平衡树，动态维护有序序列
+  -set/multiset//set不可以有重复元素
+	- insert()
+    - find()
+    - count()
+    - eraser()
+    - lower_bound(x) //返回大于等于x的最小的数的迭代器
+    - upper_bound(x) //返回大于x的最小的数的迭代器
+   -map/multi_map
+    - insert()  //插入的是一个pair
+    - eraser()
+    - map<string,int> a;
+	- a["yxc"] = 1 //支持类似数组的操作，时间复杂度为0(logn)
+- unordered_set,unordered_,map,unordered_mulitiset,unordered_multimap //基于哈希表实现
+ - 时间复杂度O(1)
+ - 不支持lower_bound() 
+- bitset 压位运算
+  - 10000*10000的矩阵
+  - bitset<10000> s;
+  - count() //返回有多少个1
+  - set() //把所有位设置为1
+  - flip(k) //将第k位取反
+```
 
