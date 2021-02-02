@@ -630,5 +630,46 @@
 
 ##### 哈希表
 
+- 离散化是需要保序的，是一种特殊的哈希方式
+
+- 字符串的存储结构，不同的key通过哈希函数可能对应相同的value,依据处理冲突的两种方式将哈希表分类为
+
+  - 开放寻址法
+
+    - 
+
+  - 拉链法
+
+    - 算法题一般只有添加和查找两种
+
+    - 哈希取模一般的除数，一般为质数
+
+    - ```C++
+      //对应的哈希值
+      int h[N];
+      memset(h,-1,sizeof h);
+      //链表
+      int e[N],ne[N],idx;
+      //插入操作
+      void insert(int x){
+          int k = (x%N+N)%N;
+          e[idx] = x; 
+          ne[idx] = h[k];
+          h[k] = idx; //头节点指向新加的节点
+          idx++;
+      }
+      //查询操作
+      bool find(int x){
+          int k  =(x%N+N)%N;
+          for(int i = h[k];i!=-1;i=ne[i]){
+              if(e[i] == x)
+                  return true;
+          }
+          return false;
+      }
+      ```
+
+- 字符串哈希方式
+
 ##### C++STL使用技巧
 
