@@ -4,7 +4,7 @@
 
 - 函数的类型是由他的返回类型和形参类型共同决定的，与函数名无关
 
-  - ```bool （*pf）(const string &,const string &)``--声明一个函数指针
+  - `bool （*pf）(const string &,const string &)`--声明一个函数指针
 
   - 右侧的是形参列表，表示pf指向的是函数，左侧发现函数的返回类型是布尔值
 
