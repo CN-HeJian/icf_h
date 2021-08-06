@@ -69,48 +69,48 @@
     }
     ```
 
-  - 返回函数指针的应用
+- 返回函数指针的应用
 
-    ```C++
-    #include "iostream"
-    using namespace std;
-    #include <string>
-    
-    int add(int a,int b){
-        cout<<"a+b "<<a+b<<endl;
-    }
-    int dec(int a,int b){
-        cout<<"a+b "<<a-b<<endl;
-    }
-    //定义1
-    decltype(add)* getFunc(string type){
-        if(type=="add")
-            return add;
-        else
-            return dec;
-    }
-    //定义2
-    auto getFunc2(string type) -> int (*) (int a ,int b){
-        if(type=="add")
-            return add;
-        else
-            return dec;
-    }
-    //定义3
-    int (*getFunc3(string type))(int a,int b){
-        if(type=="add")
-            return add;
-        else
-            return dec;
-    }
-    int main(){
-        getFunc("add")(3,5);
-        getFunc("dec")(3,5);
-        getFunc2("add")(3,5);
-        getFunc3("add")(5,7);
-    }
-    ```
-
+  ```C++
+  #include "iostream"
+  using namespace std;
+  #include <string>
+  
+  int add(int a,int b){
+      cout<<"a+b "<<a+b<<endl;
+  }
+  int dec(int a,int b){
+      cout<<"a+b "<<a-b<<endl;
+  }
+  //定义1
+  decltype(add)* getFunc(string type){
+      if(type=="add")
+          return add;
+      else
+          return dec;
+  }
+  //定义2
+  auto getFunc2(string type) -> int (*) (int a ,int b){
+      if(type=="add")
+          return add;
+      else
+          return dec;
+  }
+  //定义3
+  int (*getFunc3(string type))(int a,int b){
+      if(type=="add")
+          return add;
+      else
+          return dec;
+  }
+  int main(){
+      getFunc("add")(3,5);
+      getFunc("dec")(3,5);
+      getFunc2("add")(3,5);
+      getFunc3("add")(5,7);
+  }
+  ```
+  
 - 指针数组和数组指针
 
   - int *p1[10]---指针数组
