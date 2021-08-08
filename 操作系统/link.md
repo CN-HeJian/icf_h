@@ -23,8 +23,9 @@ g++ -o prog main.o A.o B.o
 4、反汇编O文件
 
 ```
-objdump -d main.o
+//反汇编重定向目标文件
+objdump -d main.o 
+//反汇编可执行文件
+objdump -d a.exe >x.txt  //重定向到x.txt文件中
 ```
-
-
 

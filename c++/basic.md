@@ -119,3 +119,23 @@
 
 - 
 
+3、C++中的struct和c语言中的struct
+
+```
+c：
+struct STUDENT{
+	uint64_t age;
+};
+定义一个对象时需要这样写
+struct STUDENT bob;
+引入了typedef
+typedef struct STUDENT{
+	uint64_t age;
+}stu_t;
+//此时可以少写一个struct 
+stu_t bob
+
+c++
+在C++中struct和class是一样的
+```
+
