@@ -15,3 +15,9 @@ git revert xxxxx//xx表示信息码
 echo >cpu.h //相当于linux中的touch
 ```
 
+##### 2、给文件改名字
+
+```
+mv cpu.h ass.h
+```
+
