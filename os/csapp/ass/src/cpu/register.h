@@ -1,3 +1,6 @@
+#ifndef REGISTER   
+#define REGISTER
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -25,4 +28,5 @@ typedef  struct REGISTER_STRUCT
 }reg_t;
 
 reg_t reg;
+#endif
 

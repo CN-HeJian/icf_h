@@ -1,14 +1,18 @@
+#ifndef INSTRUCTION   
+#define INSTRUCTION
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
-#define MM_LEN 1000
-uint8_t mm[MM_LEN];//memory
+#define NUM_INSTRTYPE 30  //MOV PUSH CALL the num of op type
 
 typedef enum OP {
     MOV,  //0
     PUSH, //1
-    CALL  //2
+    CALL,  //2
+    add_reg_reg //3
 } op_t;
 
 typedef enum OD_TYPE
@@ -23,9 +27,9 @@ typedef struct OD
 {
     od_type_t type;
     int64_t imm;
-    uint64_t reg1;
-    uint64_t reg2;
     uint64_t scal;
+    uint64_t *reg1;
+    uint64_t *reg2;
     char code[100];
 }od_t;
 
@@ -36,8 +40,10 @@ typedef struct INSTRUCT_STRUCT
     od_t dst;
 } inst_t;
 
-#define INST_LEN 100
+typedef void (*handler_t)(uint64_t, uint64_t);//函数类型
+handler_t handler_table[NUM_INSTRTYPE];//函数数组
 
-inst_t prgram[INST_LEN];
+void instruction_cycle();
+void add_reg_reg_handler(uint64_t src, uint64_t dst);
 
-uint64_t decode_od(od_t od);
+#endif
