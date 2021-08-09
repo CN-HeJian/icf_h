@@ -38,7 +38,9 @@ search.o : defs.h buffer.h
 
 - `.PHONY`的加入
 
-  PHONY显示的指明clean表示一个伪目标文件
+  target可以是一个文件，可以是多个文件，也可以时一个操作的名字
+
+  PHONY显示的指明clean表示一个伪目标文件，防止当前文件下就有一个名伪目标的文件，导致命令不执行
 
   rm前面的-表示某些文件出现了问题忽略，继续执行后面的事
 
@@ -152,5 +154,112 @@ cleandiff :
 
 前面讲述到目标可以作为依赖，而这个例子表示伪目标同样也可成为依赖,我们可以输入“make cleanall”和“make cleanobj”和“make cleandiff”命令来达到清除不同种类文件的目的。
 
-##### 9、多目标
+##### 9、静态模式
+
+```
+object = foo.o bar.o
+all: $(objects)
+$(objects):%.o:%.c
+	$(CC) -c $(CFLAGS) $< -o $@
+```
+
+"$<"表示所有的依赖目标集(foo.c、bar.c)
+
+"$@"表示目标集(foo.o bar.o)
+
+```
+//静态模式可以更加容易定义多目标的规则
+<target ...>;:<target-pattern>;:<prereq-patterns ...>;
+	<commands>;
+	...
+```
+
+"target"定义了一系列的目标文件，可以有通配符，是目标的一个集合
+
+"target-parrtern"指明了targets的模式，也就是目标集模式
+
+"prereq-parrterns"是目标的依赖模式，他对target-parrtern形成的模式再进行一次依赖目标的定义
+
+##### 10、命令执行
+
+当要让上一条命令的结果应用于下一条命令时，应该使用分号分隔这两条命令
+
+```
+//打印当前makefile目录
+exec:
+	cd /home/hchen
+	pwd
+//打印"/home/hchen"
+exec:
+	cd /home/hchen;pwd
+```
+
+##### 11、自动变量
+
+- $@
+
+  - 表示当前目标
+
+  ```
+  a.txt b.txt:
+  	touch $@
+  等价于
+  a.txt:
+  	touch a.txt
+  b.txt
+  	touch b.txt
+  ```
+
+- $<
+
+  - 表示第一个前置条件
+
+  ```
+  a.txt:b.txt c.txt
+  	cp $< $@
+  等价于
+  a.txt:b.txt c.txt
+  	cp b.txt a.txt
+  ```
+
+- %?
+
+  -  表示比目标更新的所有前置条件
+
+  ```
+  t:p1 p2
+  //p2的时间戳比t新，$?就指代p2
+  ```
+
+- $^
+
+  - 表示所有的前置条件，之间以空格分隔
+
+  ```
+  t:p1 p2
+  //$^代表p1 p2
+  ```
+
+##### 12、特殊符号
+
+- "-"表示此命令即使执行出错，也依然执行后续命令
+- "@"表示此命令执行，不回显。一般规则执行会在中断打印正在执行的规则，而加上此符号后只执行命令，不回显执行的规则
+
+##### 13、函数
+
+- wildcard
+
+```
+src = $ (wildcard ./src/*.c)
+//找到./src目录下所有后缀为c的文件，并且赋值给src
+```
+
+- patsubst
+
+```
+obj = $(patsubst %.c,%.o,$(src))
+//把src变量中所有后缀为c的文件替换为o
+如果要把所有的.o文件放在obj目录下，可以使用以下方法
+ob = $(putsubst ./src/%.c, ./obj/%.o ,$(src))
+```
 
