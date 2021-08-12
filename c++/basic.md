@@ -1,6 +1,6 @@
 1、tuple类型
 
-2、函数指针
+##### 2、函数指针
 
 - 函数的类型是由他的返回类型和形参类型共同决定的，与函数名无关
 
@@ -119,7 +119,7 @@
 
 - 
 
-3、C++中的struct和c语言中的struct
+##### 3、C++中的struct和c语言中的struct
 
 ```
 c：
@@ -139,7 +139,7 @@ c++
 在C++中struct和class是一样的
 ```
 
-4、static关键字
+##### 4、static关键字
 
 - (面向对象)静态成员变量
 
@@ -171,4 +171,6 @@ Student::getAverage() //调用
 static void fn();//声明
 void fn()//定义
 ```
+
+##### 5、union
 
