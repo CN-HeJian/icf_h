@@ -1,4 +1,4 @@
-### 1、git
+## 1、git
 
 ##### 1、退回某次提交
 
@@ -7,7 +7,7 @@ git log
 git revert xxxxx//xx表示信息码
 ```
 
-### 2、windows terminal
+## 2、windows terminal
 
 ##### 1、创建新文件
 
@@ -21,7 +21,7 @@ echo >cpu.h //相当于linux中的touch
 mv cpu.h ass.h
 ```
 
-### 3、shell
+## 3、shell
 
 ##### 1、定义变量
 
@@ -141,6 +141,120 @@ File mcd.sh does not have any foobar,adding one
 
 ```
 
+##### 9、ls
+
+```
+>>touch a.sh a1.sh//匹配后缀
+>>ls *sh
+a.sh a1.sh
+>>ls a*//匹配前缀
+a.sh a1.sh
+```
+
+##### 10、Tools
+
+```
+shellcheck
+tree
+nnn
+tldr 
+sudo apt-get install tldr/nnn/tree
+```
+
+##### 11、find
+
+```shell
+#在当前目录下查找所有名称为src的文件夹
+find . -name src -type d
+#查找前一天内容被修改的所有文件
+find . -mtime -1
+#查找所有文件在500k至10M的tar.gz文件
+find . -size +500k -size -10M -name '*.tar.gz'
+#删除全部扩展名为.tmp的文件,{}两边需要加空格
+find . -name '*.tmp' -exec rm {} \;
+#查找全部的PNG文件并转换为JPG
+find . -name '*.png' - exec convert {} {}.jpg \;
+```
+
+##### 12、execise
+
+```shell
+ls -a -h -t --color=auto
+#-a输出所有文件，包括隐藏文件
+#-h以人类可以理解的格式输出
+#-t文件以最近访问顺序排序
+#--color==auto以彩色文本形式输出
+```
+
+```shell
+--------------------------------------------marco.sh------------------
+#!/bin/bash
+ marco(){
+     echo "$(pwd)" > $HOME/marco_history.log
+     echo "save pwd $(pwd)"
+ }
+ polo(){
+     cd "$(cat "$HOME/marco_history.log")"
+ }
+ -----------------cmd-----------------
+>>source marco.sh
+>>marco
+ /home/icf/Desktop/test
+>>cd
+>>polo
+```
+
+- 终端中连续按两次tab，可以显示匹配到前缀的命令
+- 只能在同一个窗口执行
+- $HOME,注意要大写且不用加括号
+
+```shell
+#---------buggy
+#!/usr/bin/env bash
+n=$(( RANDOM % 100 ))
+if [[ n -eq 42 ]]; then
+	echo "Something went wrong"
+	>&2 echo "The error was using magic numbers"
+	exit 1
+fi
+echo "Everything went according to plan"
+#---------debug
+"#!/usr/bin"
+while true
+do
+	./buggy.sh 2> l.log
+	if [[ $? -ne 0 ]]; then
+		echo "failed after $count time"
+		cat l.log
+		break;
+	fi
+	((count++))	
+done
+```
+
+- 可以使用shellcheck来查错
+- if前面需要加上空格
+- **>&2** 也就是把结果输出到和标准错误一样；之前如果有定义标准错误重定向到某file文件，那么标准输出也重定向到这个file文件。
+        其中&的意思，可以看成是“The same as”、“与...一样”的意思
+
+```shell
+mkdir html_root
+cd html_root
+touch {1..10}.html
+mkdir yyds
+cd yyds
+touch xx.html  i .html
+find . -type f -name "*.html" | xargs -d '\n' tar -cvzf html.zip #表示当前目录以及子目录 -d '\n'将参数的分隔符设置为'\n'而不是默认的space
+```
+
+```
+find . -type f -print0 | xargs -0 ls -lt | head -1 # 找到最近修改的文件
+```
+
+- xargs识别字符段的标识是空格或者换行符，所以如果一个文件名里有空格或者换行符，xargs就会把它识别成两个字符串
+- find -print0表示在find的每一个结果之后加一个NULL字符，而不是默认加一个换行符。find的默认在每一个结果后加一个'\n'，所以输出结果是一行一行的。
+- xargs -0表示xargs用NULL来作为分隔符。这样前后搭配就不会出现空格和换行符的错误了。选择NULL做分隔符，是因为一般编程语言把NULL作为字符串结束的标志，所以文件名不可能以NULL结尾，这样确保万无一失
+
 ### 4、vim
 
 ```shell
@@ -169,5 +283,10 @@ source mcd.sh
 mcd test
 ```
 
+- 删除全部的文件
 
+  ```shell
+  :0,$d 
+  ```
 
+  
