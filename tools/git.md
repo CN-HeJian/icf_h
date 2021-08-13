@@ -52,6 +52,24 @@ git checkout HEAD~4 #相对引用高手
 git branch -f main C4#强制将main放在C4
 ```
 
+##### 6、示例
+
+```shell
+#切换到一个分支的一个引用
+git checkout C4
+#------------------------------------------------------------
+#在这个分支上做一些修改
+git add -u
+git commit -m "Add file.txt"
+git push#会失败
+#------------------------------------------------------------
+git branch temp#新建一个临时分支
+git branch#当前有哪些分支
+git checkout main#切换到主分支
+git merge temp#合并临时分支到main分支
+git reset --merge#如果合并出现了问题，则撤销上次的合并
+```
+
 ## 2、windows terminal
 
 ##### 1、创建新文件
