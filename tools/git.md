@@ -3,7 +3,7 @@
 ##### 1、退回某次提交
 
 ```shell
-git log
+git log --all --graph --decorate --oneline
 git revert xxxxx//xx表示信息码
 ```
 
@@ -19,10 +19,11 @@ git checkout FixBug
 ```shell
 git branch FixBug
 git checkout FixBug
+git checkout -b dog #新建dog分支并切换到dog分支
 git commit -m "Create start doc"
 git checkout main
 git commit -m "Update git doc"
-git merge FixBug#将另一个分支合并到当前分支
+git merge FixBug#将另一个分支合并到当前分支，会生成一个新的节点！！！
 ```
 
 ##### 4、另一种合并分支，被动合并
@@ -68,6 +69,55 @@ git branch#当前有哪些分支
 git checkout main#切换到主分支
 git merge temp#合并临时分支到main分支
 git reset --merge#如果合并出现了问题，则撤销上次的合并
+```
+
+##### 7、reset
+
+```shell
+#对于本地分支，直接reset
+git reset HEAD^ #恢复到指定的提交位置，和revert有一定的区别
+git reset HEAD~1
+git reset hash[i]
+#对于远程分支
+git revert HEAD #取消HEAD这一次的提交
+```
+
+##### 8、交互式rebase
+
+```shell
+git cherry-pick C3 C5 C7
+git rebase -i HEAD~4
+```
+
+##### 9、切换HEAD做了修改，但是无法提交，需要返回到另一个节点
+
+```shell
+##修改后强制切换到需要到的节点
+git checkout -f hash[i]
+```
+
+##### 10、查看修改过的内容
+
+```shell
+git diff readme.txt  #与最近的一次快照做对比
+git diff hash[i] readme.txt  #与这一次(hash[i])提交的快照做对比
+```
+
+##### 11、添加远程仓库
+
+```shell
+git init 
+git remote add <name >{url} #names是远程仓库的本地别名
+git remote rm name#删除远程仓库
+git push <远程主机名> <本地分支名>：<远程分支名>
+```
+
+##### 12、拉取
+
+```
+git fetch #拉取到本地
+git merge #合并到工作区
+git pull = git fetch + git pull #直接拉去到工作区
 ```
 
 ## 2、windows terminal
