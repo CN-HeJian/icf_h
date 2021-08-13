@@ -1,10 +1,55 @@
-## 1、git
+## 1、Version Control System(git)
 
 ##### 1、退回某次提交
 
 ```shell
 git log
 git revert xxxxx//xx表示信息码
+```
+
+##### 2、新建分支，并切换到之前的分支
+
+```shell
+git branch FixBug
+git checkout FixBug
+```
+
+##### 3、合并分支，将两个分支的内容进行合并，主动合并
+
+```shell
+git branch FixBug
+git checkout FixBug
+git commit -m "Create start doc"
+git checkout main
+git commit -m "Update git doc"
+git merge FixBug#将另一个分支合并到当前分支
+```
+
+##### 4、另一种合并分支，被动合并
+
+```shell
+#将当前所在的分支移植到merge后的分支
+git branch bugFix
+git checkout bugFix
+git commit -m "Turn to bugFix"
+git checkout main
+git commit -m "Turn to main"
+git checkout fixBug
+git rebase main #在bugFix分支上，将此分支移动到main分支
+git checkout main#切换到main分支
+git rebase fixBug#main分支移动到fixBug位置处
+```
+
+##### 5、git分支
+
+```shell
+git checkout hash[i] #切换到hash值对应的分支
+git checkout C3
+git checkout HEAD^ #相对引用
+git checkout HEAD^
+git checkout HEAD^
+git checkout HEAD~4 #相对引用高手
+git branch -f main C4#强制将main放在C4
 ```
 
 ## 2、windows terminal
