@@ -120,6 +120,12 @@ git merge #合并到工作区
 git pull = git fetch + git pull #直接拉去到工作区
 ```
 
+##### 13、撤销上一次的add，还未commit
+
+```shell
+git revert HEAD
+```
+
 ## 2、windows terminal
 
 ##### 1、创建新文件
