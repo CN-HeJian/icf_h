@@ -1,5 +1,5 @@
-#ifndef REGISTER   
-#define REGISTER
+#ifndef register_guard   
+#define register_guard
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,6 +27,4 @@ typedef  struct REGISTER_STRUCT
     uint64_t rip;
 }reg_t;
 
-reg_t reg;
 #endif
-

@@ -1,27 +1,75 @@
 #include <stdio.h>
-//#include "cpu/register.h"
-//#include "memory/instruction.h"
+#include "memory/instruction.h"
+#include "memory/dram.h"
+#include "cpu/mmu.h"
+#include "cpu/register.h"
+#include "disk/elf.h"
+
+extern reg_t reg;
+extern inst_t program[15];
+extern uint8_t mm[MM_LEN];
 
 int main(){
-    //cpu_t cpu;
-    //reg.rax = 0x1234abcd5678ffaa;
-    //printf("eax:%08x\n", reg.eax);
-    //printf("ax:%04x\n", reg.ax);
-    //printf("al:%02x\n", reg.al);
-    //printf("ah:%02x\n", reg.ah);
+    init_handler_table();
+    // init
+    reg.rax = 0x12340000;
+    reg.rbx = 0x0;
+    reg.rcx = 0x8000660;
+    reg.rdx = 0xabcd;
+    reg.rsi = 0x7ffffffee2f8;
+    reg.rdi = 0x1;
+    reg.rbp = 0x7ffffffee210;
+    reg.rsp = 0x7ffffffee1f0;
+    reg.rip = (uint64_t)&program[11]; //special
+
+    write64Bits_ram(va2pa(0x7ffffffee210), 0x08000660); //rbp
+    write64Bits_ram(va2pa(0x7ffffffee208), 0x0);
+    write64Bits_ram(va2pa(0x7ffffffee200), 0xabcd);
+    write64Bits_ram(va2pa(0x7ffffffee1f8), 0x12340000);
+    write64Bits_ram(va2pa(0x7ffffffee1f0), 0x08000660); //rsp
+
+    //print start state
+    print_register();
+    print_stack();
+
+    //run inst
+    for(int i = 0;i < 15;i++){
+        instruction_cycle();
+        print_register();
+        print_stack();
+    }
+
+    //varify register
+    int match = 1;
+    match = match && (reg.rax == 0x1234abcd);
+    match = match && (reg.rbx == 0x0);
+    match = match && (reg.rcx == 0x8000660);
+    match = match && (reg.rdx == 0x12340000);
+    match = match && (reg.rsi == 0xabcd);
+    match = match && (reg.rdi == 0x12340000);
+    match = match && (reg.rbp == 0x7ffffffee210);
+    match = match && (reg.rsp == 0x7ffffffee1f0);
+
+    if(match){
+        printf("register match\n");
+    }else{
+        printf("register not match\n");
+    }
+
+    //varify memory
+    match = 1;
+
+    match = match && (read64Bits_ram(va2pa(0x7ffffffee210)) == 0x08000660);     // rbp
+    match = match && (read64Bits_ram(va2pa(0x7ffffffee208)) == 0x1234abcd);
+    match = match && (read64Bits_ram(va2pa(0x7ffffffee200)) == 0xabcd);
+    match = match && (read64Bits_ram(va2pa(0x7ffffffee1f8)) == 0x12340000);
+    match = match && (read64Bits_ram(va2pa(0x7ffffffee1f0)) == 0x08000660);
+
+    if(match){
+        printf("memory match\n");
+    }else{
+        printf("memory not match\n");
+    }
+
     return 0;
 }
-/*
-uint64_t decode_od(od_t od){
-    if(od.type == IMM){
-        return od.imm;
-    }else if(od.type == REG){
-        return *(uint64_t *)od.reg1;
-    }else{
-        uint64_t addr;
-
-        //addr = oxfffffff
-        return mm[addr%MM_LEN];
-    }
-}
-*/
