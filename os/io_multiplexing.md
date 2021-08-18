@@ -55,3 +55,12 @@
    为了更全面的理解，先介绍下在Linux系统下所有IO模型。
 
 - 阻塞IO、非阻塞IO、IO多路复用、信号驱动IO、异步IO
+
+- ##### 阻塞IO
+
+  - 这是最常用的简单的IO模型。阻塞IO意味着当我们发起一次IO操作后一直等待成功或失败之后才返回，在这期间程序不能做其它的事情。阻塞IO操作只能对单个文件描述符进行操作，详见[read](https://link.zhihu.com/?target=http%3A//man7.org/linux/man-pages/man2/read.2.html)或[write](https://link.zhihu.com/?target=http%3A//man7.org/linux/man-pages/man2/write.2.html)。
+
+- ##### 非阻塞IO
+
+  - 在发起IO时，通过对文件描述符设置O_NONBLOCK flag来指定该文件描述符的IO操作为非阻塞
+  - 非阻塞的IO通常发生在一个for循环中，因为每次IO操作要么操作成功，要么当IO操作会阻塞时返回错误EWOULDBLOCK/EAGAIN,然后在根据需要进行下一次的for循环操作。这种类似轮询的方式会浪费很多不必要的CPU资源，是一种糟糕的设计。和阻塞IO一样，非阻塞IO也是通过调用[read](https://link.zhihu.com/?target=http%3A//man7.org/linux/man-pages/man2/read.2.html)或write[write](https://link.zhihu.com/?target=http%3A//man7.org/linux/man-pages/man2/write.2.html)来进行操作的，也只能对单个描述符进行操作。
