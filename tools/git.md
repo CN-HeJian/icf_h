@@ -126,6 +126,27 @@ git pull = git fetch + git pull #直接拉去到工作区
 git revert HEAD
 ```
 
+##### 14、协作开发
+
+```shell
+git clone xxx
+git remote add origin xxxx
+//对原工程做部分修改、一开始无法新建自己的分支
+git add -u
+git commit -m "x"
+git push
+//新建自己的分支
+git branch hj
+git checkout hj
+git status
+//在新建的分支做出部分修改
+git add -u
+git commit -m "x"
+git push --set-upstream origin hj
+```
+
+
+
 ## 2、windows terminal
 
 ##### 1、创建新文件
