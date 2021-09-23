@@ -200,7 +200,7 @@ reverse-stepi
 
 ##### phase_1
 
-```assembly
+```shell
 <---------------------------------------------------------------------->main.s
   400e28:	bf 78 23 40 00       	mov    $0x402378,%edi
   400e2d:	e8 de fc ff ff       	callq  400b10 <puts@plt>
@@ -219,7 +219,7 @@ reverse-stepi
   400ee0:	48 83 ec 08          	sub    $0x8,%rsp
   400ee4:	be 00 24 40 00       	mov    $0x402400,%esi  #第二次输入，内部的局部变量
   400ee9:	e8 4a 04 00 00       	callq  401338 <strings_not_equal>
-  400eee:	85 c0                	test   %eax,%eax
+  400eee:	85 c0                	test   %eax,%eax 
   400ef0:	74 05                	je     400ef7 <phase_1+0x17>
   400ef2:	e8 43 05 00 00       	callq  40143a <explode_bomb>
   400ef7:	48 83 c4 08          	add    $0x8,%rsp
@@ -246,7 +246,7 @@ reverse-stepi
   40134d:	e8 c9 ff ff ff       	callq  40131b <string_length>
   401352:	ba 01 00 00 00       	mov    $0x1,%edx
   401357:	41 39 c4             	cmp    %eax,%r12d  #比较第二个函数的返回值和%r12d的值，cmp如果相等，ZF set
-  
+  ------------------------------------------------------------------------------->step
   40135a:	75 3f                	jne    40139b <strings_not_equal+0x63> 
   40135c:	0f b6 03             	movzbl (%rbx),%eax
   40135f:	84 c0                	test   %al,%al
