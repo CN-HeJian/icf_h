@@ -129,6 +129,7 @@ git revert HEAD
 ##### 14、协作开发
 
 ```shell
+shell:: ssh-keygen -t rsa -C "2277075501@qq.com"
 git clone xxx
 git remote add origin xxxx
 //对原工程做部分修改、一开始无法新建自己的分支
@@ -145,7 +146,12 @@ git commit -m "x"
 git push --set-upstream origin hj
 ```
 
+##### 15、删除远程库
 
+```shell
+git remote -v
+git remote remove orgin
+```
 
 ## 2、windows terminal
 
