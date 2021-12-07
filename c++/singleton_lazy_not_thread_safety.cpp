@@ -20,21 +20,15 @@ private:
 };
 
 SingleInstance * SingleInstance::m_SingleInstance = NULL;
-//std::mutex SingleInstance::m_mutex;
 
 SingleInstance* SingleInstance::GetInstance(){
     if(m_SingleInstance==NULL){
-            //std::unique_lock<std::mutex> lock(m_mutex);
-            //if(m_SingleInstance == NULL){
-                m_SingleInstance = new SingleInstance();
-            //}
-        //m_SingleInstance = new SingleInstance();
+            m_SingleInstance = new SingleInstance();
     }
     return m_SingleInstance;
 }
 
 void SingleInstance::deleteInstance(){
-    //std::unique_lock<std::mutex> lock(m_mutex); // 加锁
     if(m_SingleInstance){
         delete m_SingleInstance;
         m_SingleInstance = NULL;
@@ -57,7 +51,6 @@ void *PrintHello(void* thread_id){
     pthread_detach(pthread_self());
 
     int tid = *((int *)thread_id);
-    //std::cout<<"my thread_id is "<<tid<<endl;
     SingleInstance::GetInstance()->print_addr();
 
     pthread_exit(NULL);
@@ -74,7 +67,6 @@ int main(){
     int i=0;
 
     for(i=0;i<NUM_THREADS;i++){
-        //std::cout<<"create thread "<<i<<endl;
         ret = pthread_create(&threads[i],nullptr,PrintHello,(void*)&(indexes[i]));
         if(ret){
             std::cout<<"error create thread failed"<<endl;
@@ -87,7 +79,3 @@ int main(){
 
     return 0;
 }
-
-
-
-
