@@ -112,6 +112,9 @@ auto printf(std::shared_ptr<vector<int>> &vect)->std::ostream&{
     return std::cout;
 }
 
+void process(shared_ptr<int>ptr){
+    
+}
 
 int main(){
     StrBlob b1;
@@ -151,23 +154,55 @@ int main(){
     pci=nullptr;
 
     //12.6
-    vector<int>* vec = new vector<int>();
-    populate(vec);
-    cout<<"printf cin"<<endl;
-    printf(vec);
-    delete vec; 
+    // vector<int>* vec = new vector<int>();
+    // populate(vec);
+    // cout<<"printf cin"<<endl;
+    // printf(vec);
+    // delete vec; 
 
     //12.7
-    std::shared_ptr<vector<int>> vect(new vector<int>());
-    populate(vect);
-    cout<<"smart_point: print cin:"<<endl;
-    printf(vec);
-
-    //12.8
+    // std::shared_ptr<vector<int>> vect(new vector<int>());
+    // populate(vect);
+    // cout<<"smart_point: print cin:"<<endl;
+    // printf(vec);
 
 
     //12.9
+    // int *q = new int(42),*r=new int(100);
+    // //r = q;//memory leak
+    // auto q2 = make_shared<int>(42),r2=make_shared<int>(100);
+    // r2= q2;//
+    // //------
+    // delete q;
+    // delete r;
 
+    shared_ptr<double> p_s1;
+    //*p_s1 = 42;
+    shared_ptr<int> p_s2(new int(42));
+    shared_ptr<int> p_s3 = make_shared<int>(43);
+    // //接受指针参数的智能指针构造函数是explicit，因此不能将内置指针隐式转换为一个智能指针，必须使用直接初始化的方式
+    // //shared_pptr<int> p4 = new int(7);
+    std::cout<<"*p_s2: "<<*p_s2<<" *p_s3: "<<*p_s3<<endl;
+
+
+    std::shared_ptr<int> p_s4;
+    //p_s4 = new int(1024);
+    p_s4.reset(new int(1024));
+    cout<<"p_s4: "<<*p_s4<<endl;
+
+    shared_ptr<int> pp_s(new int(42));
+    process(shared_ptr<int>(pp_s));
+
+    //创建了一个新的临时智能指针，在表达式结束之后
+    //这个临时智能指针会被销毁，引用计数变为0
+    //process(shared_ptr<int>(pp_s.get()));  //创建了一个新的临时智能指针，在表达式结束之后，
+    //cout<<"shared_ptr: "<<*pp_s<<endl;
 
     return 0;
+}
+
+//error  implict changr to shared_ptr
+shared_ptr<int> clone(int p){
+    //return new int(p);error  implict changr to shared_ptr
+    return shared_ptr<int>(new int(p));
 }
