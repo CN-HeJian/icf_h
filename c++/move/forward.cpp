@@ -1,40 +1,36 @@
-// Copyright 2021 icf
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/*
+ *  Boost库在这里已经不需要了，我们将其拿掉，可以更简洁的看清楚转发的代码实现
+ */
 
 #include <iostream>
-#include <boost/type_index.hpp>
-
+#include <utility>
 using namespace std;
-using boost::typeindex::type_id_with_cvr;  
 
+// 接收左值的函数f()
+template<typename T>
+void f(T &)
+{
+	cout << "f(T &)" << endl;
+}
+
+// 接收右值的函数f()
+template<typename T>
+void f(T &&)
+{
+	cout << "f(T &&)" << endl;
+}
+
+// 万能引用，转发接收到的参数 param
 template<typename T>
 void PrintType(T&& param)
 {
-    // 利用Boost库打印模板推导出来的 T 类型
-	cout << "T type：" << type_id_with_cvr<T>().pretty_name() << endl; 
-    
-    // 利用Boost库打印形参的类型
-	cout << "param type:" << type_id_with_cvr<decltype(param)>().pretty_name() << endl;
+    f(std::forward<T>(param));
+	//f(param);  // 将参数param转发给函数 void f()
 }
 
 int main(int argc, char *argv[])
 {
-	int a = 0;                              // 左值
-	PrintType(a);                           // 传入左值
-
-	int &lvalue_refence_a = a;              // 左值引用
-	PrintType(lvalue_refence_a);            // 传入左值引用
-
-	PrintType(int(2));                      // 传入右值
+	int a = 0;
+	PrintType(a);//传入左值
+	PrintType(int(0));//传入右值
 }
