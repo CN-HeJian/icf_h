@@ -1,0 +1,39 @@
+// Copyright 2021 icf
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+
+
+# https://www.bilibili.com/video/BV1qa4y1j7xk?spm_id_from=333.999.0.0
+# 南京大学计算机基础习题课第一节
+
+// 预处理
+1) gcc -E
+
+// 查看编译信息
+2）gcc --verbose -m32 A.c
+
+// 反汇编
+3) objdump -d exc
+
+// 比较两文件是否相同
+4) diff odjsum.s A.s
+
+// 简单命令行工具
+5) tldr
+
+// 安装包,一直竟然想不起来
+6）sudo apt-get install tldr
+
+// 添加一个路径，头文件在哪儿找? mini-reactor中的makefile添加了这个功能
+7） gcc A.c -I .
