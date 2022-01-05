@@ -12,35 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-1) 滑动窗口类型
 
-2）链表
+#include <iostream>
+using namespace std;
 
-3）双指针
+#include <bits/socket.h>
 
-4）二分
+union
+{
+    short value;
+    char  bytes[sizeof(short)];
+} test;
 
-4）广搜、深搜
+int main(int argc,char* argv[]){
+    short val = 0x0102;  //高字节放在高地址上，低字节放在地址上！！！
+    test.value = val;
 
-5）树
+    if(test.bytes[0]== 1  && test.bytes[1] == 2){
+        // 
+        std::cout<<"Big endia"<<std::endl;
+    }
 
-6）并查集
+    if(test.bytes[0]== 2 && test.bytes[1] == 1){
+        //
+        std::cout<<"Small endia"<<std::endl;
+    }
 
-7）回溯
-
-8）动态规划
-
-9）位运算
-
-10）字典树
-
-11）单调队列
-
-12）单调栈
-
-13）排序算法
-
-14）前缀和
-
-15）常见的图算法：BFS\DFS\最小生成树\拓扑排序\最短路径【阿里】
-
+    return 0;
+}
