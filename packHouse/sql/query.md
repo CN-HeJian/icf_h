@@ -34,6 +34,10 @@
     SELECT product, COUNT(product) AS num_prods FROM sele GROUP BY product;
     //过滤分组,WHERE过滤行、HAVING 过滤分组
     SELECT cust_id,COUNT(*) AS orders FROM Orders GROUP BY cust_id HAVING COUNT(*)>=2;
-
-
+    //列出具有两个以上产品且其价格大于等于4的供应商
+    SELECT vend_id,COUNT(*) AS num_prods FROM Products WHERE prod_price>=4 GROUP BY vend_id HAVING COUNT(*)>=2
+    //分组与排序,默认排序方法为升序排序
+    SELECT order_num,COUNT(*) AS items FROM OrderItems GROUP BY order_num HAVING COUNT(*)>=3 ORDER BY items ,order_num
+    //语句执行顺序
+    SELECT -> FROM -> WHERE -> GROUP BY -> HAVING -> ORDER BY
     ```
