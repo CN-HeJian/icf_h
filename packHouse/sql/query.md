@@ -41,3 +41,25 @@
     //语句执行顺序
     SELECT -> FROM -> WHERE -> GROUP BY -> HAVING -> ORDER BY
     ```
+
+### 使用子查询
+- ```sql
+    //利用子查询进行过滤
+    SELECT order_num FROM OrderItems WHERE prod_id = 'RGAN01';  //找到订单编号
+    SELECT cust_id FROM Orders WHERE order_num IN (2007,2008);  //找到顾客id
+    SELECT cust_name, cust_contact FROM Customers WHERE cust_id IN ('10000004','10000005') //找到顾客具体信息
+    //将前两句嵌套
+    SELECT cust_id FROM Orders WHERE order_num IN (SELECT order_num FROM OrderItems WHERE prod_id = 'RGAN01');
+    //三句嵌套
+    SELECT cust_name,cust_contact FROM Customers WHERE cust_id IN(
+        SELECT cust_id FROM Orders WHERE order_num IN (
+            SELECT order_num FROM OrderItems HWERE prod_id = 'RGAN01'
+        )
+    );
+    //以下为SQLILE语句
+    SELECT date,OPT2PeakToPack from MACH08 WHERE OPT2PeakToPack == 3 AND date IN (select date from MACH08 ORDER BY DESC LIMIT 500);
+    //作为计算字段使用子查询
+    SELECT COUNT(*) AS orders FROM Orders WHERE cust_id = '10000001';
+    SELECT cust_name,cust_state,(SELECT COUNT(*) FROM Orders WHERE Orders.cust_id = Customers.cust_id) AS orders FROM Customers ORDER BY cust_name;
+
+    ```
