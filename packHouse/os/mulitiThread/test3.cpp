@@ -27,7 +27,7 @@ bool ready = false;
 void work(int id){
     std::unique_lock<mutex> lck(mtx);
     while(!ready)
-        cond.wait(lck);
+        cond.wait(lck);  //线程被阻塞、该函数会自动调用lck.unlock()来解锁
     std::cout<<"thrad "<<id<<endl;
 }
 
