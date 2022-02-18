@@ -102,6 +102,34 @@ void merge(vector<int>&array,int l,int r){
     }
 }
 
+//快速排序
+//难点：随机选一个数，使所有小于选择的数都在左边，大于选择的数都在右边, 注意do while的写法
+void quick(vector<int>& array,int l,int r){
+    if(l>=r){
+        return ;
+    }
+    int x = array[l];
+
+    int i = l-1,j=r+1; //写成两侧
+
+    while(i<j){
+        do{
+            i++;
+        }while(array[i]<x);
+
+        do{
+            j--;
+        }while(array[j]>x);
+        
+        if(i<j){
+            swap(array[i],array[j]);
+        }
+    }
+
+    quick(array,l,j);
+    quick(array,j+1,r);
+}
+
 
 int main(){
     vector<int> array={88,588,46,67,52,29,7,777,87,6574,546,27687,47,7358,676,8564,859337,989,2,5,7834};
@@ -110,8 +138,10 @@ int main(){
     
     //insert(array);
 
-    f_array.resize(array.size(),0);
-    merge(array,0,array.size()-1);
+    //f_array.resize(array.size(),0);
+    //merge(array,0,array.size()-1);
+
+    quick(array,0,array.size()-1);
 
     for(auto c:array){
         cout<<c<<" ";
