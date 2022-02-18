@@ -16,7 +16,18 @@
 #include <vector>
 using namespace std;
 
-void sort(vector<int>&array){
+
+//bubble、insert
+//merge、quick、topologic
+//heap、bucket
+
+
+//稳定排序：相等的两个数，排序之后相对位置不会替换
+
+ 
+//冒泡排序 O(n^2) 稳定
+//核心思想：每一轮都在寻找的范围内找到最大的数
+void bubble(vector<int>&array){
     int cycle = array.size();
     bool flag = true;
     for(int i=0;i<cycle-1&&flag;i++){
@@ -33,10 +44,75 @@ void sort(vector<int>&array){
     }
 }
 
+//插入排序 O(n^2) 稳定
+//核心思想：默认左边是有序的，插入新值到有序的序列中
+void insert(vector<int>&array){
+    int cycle = array.size();
+    for(int i=1;i<cycle;i++){
+        //i 表示未排序的
+        //i 之前的是已经排序过的
+        int temp = array[i];
+        int j;
+        for(j = i-1; j>=0; j--){
+            if(array[j]>temp){
+                array[j+1] = array[j];
+            }else{
+                break;
+            }
+        }
+        array[j+1] = temp;
+    }
+}
+
+//归并排序 nlog(n) 每一层归并都是O(n),一共有log(n)层
+//难点：将两个有序数组合二为一，需要一个辅助数组
+vector<int> f_array;
+void merge(vector<int>&array,int l,int r){
+    if(l>=r){
+        return;
+    }
+    int mid = (l+r) >>1;
+
+    merge(array,l,mid);
+    merge(array,mid+1,r);
+
+    //把两个有序的序列归并到辅助数组中
+    int k=0,i=l,j=mid+1;
+    while(i<=mid&&j<=r){
+        if(array[i]<=array[j]){
+            f_array[k] = array[i];
+            i++;
+            k++;
+        }else{
+            f_array[k] = array[j];
+            j++;
+            k++;
+        }
+    }
+    while(i<=mid){
+        f_array[k++] = array[i++];
+    }
+    while(j<=r){
+        f_array[k++] = array[j++];
+    }
+
+    //归并完成l-r区间的数字
+    for(i=l,j=0 ; i<=r ; i++,j++){
+        array[i] = f_array[j];
+    }
+}
+
+
 int main(){
-    vector<int> array={88,588,46,67,52,29,7};
-    sort(array);
+    vector<int> array={88,588,46,67,52,29,7,777,87,6574,546,27687,47,7358,676,8564,859337,989,2,5,7834};
     
+    //bubble(array);
+    
+    //insert(array);
+
+    f_array.resize(array.size(),0);
+    merge(array,0,array.size()-1);
+
     for(auto c:array){
         cout<<c<<" ";
     }
