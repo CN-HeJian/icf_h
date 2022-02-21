@@ -146,6 +146,5 @@ int main(){
     for(auto c:array){
         cout<<c<<" ";
     }
-
     cout<<endl;
 }
