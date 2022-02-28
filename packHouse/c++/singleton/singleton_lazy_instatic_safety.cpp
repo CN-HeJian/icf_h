@@ -9,10 +9,11 @@ public:
 private:
     Singleton();
     ~Singleton();
-
-    Singleton(const Singleton&signal);
-    const Singleton &operator=(const Singleton &singnal);
+    Singleton(const Singleton& ths){};
+    const Singleton& operator=(const Singleton& rhs);
 };
+
+
 
 Singleton& Singleton::getInstance(){
     static Singleton s;

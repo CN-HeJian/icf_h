@@ -12,6 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+// https://zhuanlan.zhihu.com/p/335994370
+
+// const 左值引用可以指向右值,普通的左值引用不允许
+// const int& ref = 5;
+
+// 右值引用专门为右值而生，可以指向右值，不能指向左值
+// 右值引用可以修改右值
+// int &&ref_a_right = 5
+// ref_right = 6
+
+//move() 不是移动的作用，而是将左值强制转换为右值
+
+//被声明出的左值和右值都是左值
+//右值引用既可以是左值也可以是右值，如果有名称则为左值，否则为右值
+
+//深拷贝构造函数、深拷贝赋值函数
+//拷贝构造函数以及赋值运算符重载已经通过左值引用来避免一次多余的拷贝了
+
+
+
 #include <iostream>
 #include <vector>
 #include <cstring>

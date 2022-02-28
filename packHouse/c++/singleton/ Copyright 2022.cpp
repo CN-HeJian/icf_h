@@ -12,22 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <iostream>
-#include <bits/stdc++.h>
+class A
+{
 
-using namespace std;
+public:
+    static A* getInstance();
+    static void deleteInstance();
 
-int main(){
-    string s;
-    while(cin>>s){
-        int n = s.size();
-        for(int i=0;i<n-1;i++){
-            for(int j=0;j<n-1-i;j++){
-                if((s[j]>='A'&&s[j]<='Z') && (s[j+1]>='a' && s[j+1]<='z')){
-                    swap(s[j],s[j+1]);
-                }
-            }
-        }
-        cout<<s<<endl;
-    }
+private:
+    A(){}
+    ~A(){}
+    //拷贝赋值
+    A(const A&){}
+    //拷贝构造
+    const A& operator=(const A&){return *this;}; 
+
+private:
+    static A *instance;
+
+};
+
+A* A::instance = new A();
+
+
+A* A::getInstance(){
+
 }
+
+void A::deleteInstance(){
+
+}
+

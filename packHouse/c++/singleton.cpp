@@ -11,23 +11,30 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
-#include <iostream>
 #include <bits/stdc++.h>
-
 using namespace std;
 
-int main(){
-    string s;
-    while(cin>>s){
-        int n = s.size();
-        for(int i=0;i<n-1;i++){
-            for(int j=0;j<n-1-i;j++){
-                if((s[j]>='A'&&s[j]<='Z') && (s[j+1]>='a' && s[j+1]<='z')){
-                    swap(s[j],s[j+1]);
-                }
-            }
-        }
-        cout<<s<<endl;
+class Singleton{
+public:
+    static Singleton* getInstance(){
+        return m_instance;
     }
-}
+
+    static void deleteInstance(){
+        if(m_instance){
+        delete m_instance;
+        m_instance = nullptr;
+    }
+
+private:
+    Singleton(){}
+    ~Singleton(){}
+
+    Singleton(const Singleton& rhs);
+    const  Singleton& operator=(const Singleton& rhs);
+
+private:
+    static Singleton* m_instance;
+};
+
+Singleton*  Singleton::m_instance = new Singleton();

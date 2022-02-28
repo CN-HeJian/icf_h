@@ -38,7 +38,7 @@ int main(){
             }
         }
         
-        res = dp[n][n];
+        res = n - dp[n][n];
 
 
         cout<<res;
