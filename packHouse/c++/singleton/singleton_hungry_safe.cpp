@@ -4,25 +4,17 @@ using namespace std;
 
 class Singleton{
 public:
-    static Singleton* getInstance(){
-        return m_instance;
-    }
-
-    static void deleteInstance(){
-        if(m_instance){
-        delete m_instance;
-        m_instance = nullptr;
-    }
-
+    static Singleton* getInstance();
+    static void deleteInstance();
+    void print_addr();
 private:
-    Singleton(){}
-    ~Singleton(){}
-
-    Singleton(const Singleton& rhs);
-    const  Singleton& operator=(const Singleton& rhs);
-
+    Singleton();
+    ~Singleton();
+    //拷贝构造函数
+    Singleton(const Singleton& s);
+    const Singleton& operator=(const Singleton& Singleton);
 private:
-    static Singleton* m_instance;
+    static Singleton* m_singleton;
 };
 
 
