@@ -12,27 +12,3 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <bits/stdc++.h>
-using namespace std;
-
-class Solution {
-public:
-
-    vector<string> path;
-    vector<vector<string>> res;
-    
-    vector<vector<string>> partition(string s) {
-        
-        dfs()
-    }
-
-    void dfs(string &s,int startPos,vector<string> path){   
-        
-    }
-
-    bool check(string){
-
-    }
-
-
-};

@@ -15,16 +15,34 @@
 class Solution {
 public:
     int compareVersion(string version1, string version2) {
-        
         int n1 = version1.size()-1;
         int n2 = version2.size()-1;
-        
-        int i,j;
-        
-        while(){
-            
+        int i=0,j=0;
+    
+        while(i<=n1 || j<=n2){
+            int temp1 = 0;
+            int temp2 = 0;
+            if(i<=n1){
+                while(i<=n1&&version1[i]!='.'){
+                    temp1 = temp1*10+version1[i]-'0';
+                    i++;
+                }
+                i++;
+            }
+            if(j<=n2){
+               while(j<=n2&&version2[j]!='.'){
+                    temp2 = temp2*10+version2[j]-'0';
+                    j++;
+                }
+                j++;
+            }
+            if(temp1<temp2){
+                return 1;
+            }
+            if(temp1>temp2){
+                return -1;
+            }
         }
-        
-        
+        return 0;
     }
 };

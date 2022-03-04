@@ -23,26 +23,21 @@ public:
         vector<int> res;
         stack<TreeNode*> st;
 
-        st.push(root);
-        
-        
-        while(!st.empty()){
-            
-            auto t = st.top();
-            st.pop();
+        TreeNode* cur = root;
 
-            if(!t){
-                continue;
+        while(!st.empty()||cur){
+
+            if(cur){
+                st.push(cur);
+                cur = cur->left;
+            }else{
+                TreeNode* t = st.top();
+                st.pop();
+                res.push_back(t->val);
+                cur  = t->right;
             }
 
-            res.push_back(t->val);
-
-            st.push(t->left);
-            st.push(t->right);
-
         }
-
-        reverse(res.begin().res.end());
 
         return res;
     }
