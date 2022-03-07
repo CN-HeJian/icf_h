@@ -86,7 +86,7 @@ private:
 };
 
 
-void fun(const A&  b){
+void fun(const A  b){
     //A c=b;
     ///cout<<b.getVal()<<endl;
 }
@@ -98,12 +98,13 @@ void fun(const A&  b){
 
 int main(int argc, char *argv[]){
     std::vector<A> vec;
-    vec.push_back(A());
-    cout<<"------"<<endl;
+    A();
+    //vec.push_back(A());
+    //cout<<"------"<<endl;
     // A c;
     // fun(c);
     // cout<<"------"<<endl;
-    fun(A());
+    //fun(A());
     // cout<<"------"<<endl;
 }
 
