@@ -22,6 +22,7 @@ public:
     SharedPointer() :m_refCount(nullptr), m_pointer(nullptr){}
     
     //构造函数，初始化时，指向一个已经分配好的资源
+    //函数指针传入的是一个指针
     SharedPointer(T* adoptTarget) :m_refCount(nullptr), m_pointer(adoptTarget)
     {
         addReference();

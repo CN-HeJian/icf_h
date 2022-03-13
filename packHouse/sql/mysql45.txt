@@ -1,0 +1,69 @@
+// Copyright 2022 icf
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#哈希索引
+单个查询会很快
+范围查询，不太好
+
+#有序数组
+解决了哈希索引范围查询需要遍历的问题
+但是对于插入新的数据情况，需要挪动很多的内容
+
+#N叉树
+索引不只存在内存，也存在磁盘
+
+
+索引是在存储引擎里面实现的，INNODB
+
+每一个索引在InnoDB里面对应一颗B+树
+
+create table T(id int primary key, k in not null,name varchar(16),index (k)) engine=INNODB
+
+主键索引也被称为聚簇索引、非主键索引也被称为二级索引
+如果语句是主键查询方式，只需要搜索ID这颗B+树
+如果是普通索引，需要先搜索k索引树，得到id值为500，再到id索引树搜索一次，有一次回表的操作
+
+主键长度越小，普通索引的叶子节点就越小，普通索引占用的空间就越小
+
+//重建索引k
+alter table t drop index k;
+alter table t add index(k);
+
+//重建主键索引
+alter table t drop primary key;
+alter table t add primary key(id);
+
+对于两个重建索引上面有什么问题？
+
+
+
+由于查询结果所需要的数据只在主键索引上有，所以不得不回表。
+
+覆盖索引：【索引优化！！！】
+我们需要查询ID的值，而ID值已经在K索引树上了，因此可以直接提供查询结果，不需要回表
+
+有一个高频请求，根据市民的身份证号查询他的姓名，在这个高频请求上用到覆盖索引，不再需要回表查整行记录，减少语句的执行时间
+
+支持最左前缀，就可以利用索引来加速索引，有了AB联合索引，一般就需要在A上建立索引了
+如果通过调整顺序可以少维护一个索引，那么这个索引就是优先需要考虑的
+
+Mysql5.6引入了索引下推优化，对回表次数具有一定的优化
+
+联合索引：
+1)覆盖索引【不用回表，直接返回】
+2)最左前缀【将经常查的放在最前面】
+3)索引下推【减少回表次数】
+
+Mysql里面的锁大致可以分成全局锁、表级锁、行锁
+
